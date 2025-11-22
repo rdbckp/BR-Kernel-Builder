@@ -1,4 +1,4 @@
-name: Kernel_Builder
+name: Simple
 
 on: 
   workflow_dispatch:
