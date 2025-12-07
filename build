@@ -8,7 +8,7 @@ CLANG_TAR_URL="https://android.googlesource.com/platform/prebuilts/clang/host/li
 
 BINUTILS_32_GIT="https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9"
 
-KERNEL_SOURCE_URL="https://github.com/Firxp011/android_kernel_samsung_a02"
+KERNEL_SOURCE_URL="https://github.com/rdbckp/kernel_a02"
 
 ANYKERNEL_GIT="https://github.com/thecatvoid/AnyKernel3.git"
 
@@ -18,7 +18,7 @@ cd "${WORK}" || exit 1
 # Setup stuff
 if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_TAR_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
 [ ! -d binutils-32 ] && git clone --depth=1 "${BINUTILS_32_GIT}" -b android11-release binutils-32
-[ ! -d kernelgw ] && git clone --depth=1 "${KERNEL_SOURCE_URL}" kernelgw
+[ ! -d kernelgw ] && git clone --depth=1 "${KERNEL_SOURCE_URL}" -b kernel kernelgw
 
 # Set toolchain path
 PATH="${WORK}/clang/bin:${WORK}/binutils-32/bin:/bin"
