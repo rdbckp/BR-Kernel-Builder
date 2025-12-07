@@ -34,7 +34,6 @@ jobs:
       run: |
         export KBUILD_BUILD_USER="${{ github.actor }}"
         export KBUILD_BUILD_HOST="${{ github.event.inputs.DEVICE_NAME }}"
-        make clean && make mrproper
         ./build
 
     - name: Set Properties
