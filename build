@@ -3,9 +3,12 @@
 set -e -x
 
 # Kernel Source
-KERNEL_SOURCE="https://github.com/rdbckp/kernel_a02"
-KERNEL_BRANCH="kernel"
-KERNEL_DEFCONFIG="a02_00_defconfig"
+KERNEL_SOURCE="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git"
+KERNEL_SOURCE="v4.14.187"
+KERNEL_DEFCONFIG="multi_v7_defconfig"
+# KERNEL_SOURCE="https://github.com/rdbckp/kernel_a02"
+# KERNEL_SOURCE="kernel"
+# KERNEL_DEFCONFIG="a02_defconfig"
 
 # Prebuilt Clang Toolchain (AOSP)
 CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android12L-release/clang-r383902.tar.gz"
