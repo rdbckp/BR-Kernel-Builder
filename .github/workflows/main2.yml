@@ -1,32 +1,61 @@
-name: Copy
+name: Build MikaKernel
 
-on: 
+
+on:
   workflow_dispatch:
-    inputs:
-      DEVICE_NAME:
-        description: 'Ready'
-        required: true
-        default: 'Ok'
 
-permissions:
-  contents: write
-  pull-requests: write
 
 jobs:
-  copy-files:
+  build-kernel:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Setup environment
+        run: |
+          echo "ANYKERNEL_SOURCE=$(cat config.env | grep -w "ANYKERNEL_SOURCE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "ANYKERNEL_SOURCE_BRANCH=$(cat config.env | grep -w "ANYKERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "KERNEL_SOURCE=$(cat config.env | grep -w "KERNEL_SOURCE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "KERNEL_SOURCE_BRANCH=$(cat config.env | grep -w "KERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "KERNEL_CONFIG=$(cat config.env | grep -w "KERNEL_CONFIG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "BUILD_ARGS=$(cat config.env | grep -w "BUILD_ARGS" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
 
-      - name: Run file copy action
-        uses: DeWildeDaan/copy-from-repo@main
+      - name: Pull toolchain
+        run: |
+          git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9 arm-linux-androideabi-4.9
+          mkdir clang && curl https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android12L-release/clang-r383902.tar.gz -RLO && tar -C clang/ -xf clang-*.tar.gz
+
+      - name: Pull kernel source
+        run: |
+          git clone --depth=1 ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }} kernel-source
+
+      - name: Build kernel
+        run: |
+          export KBUILD_BUILD_USER="rdbckp"
+          export KBUILD_BUILD_HOST="workspace"
+          export PATH=$GITHUB_WORKSPACE/clang/bin:${PATH}
+          args="                  ARCH=arm \
+                                  O=../out \
+                                  ${{ env.BUILD_ARGS }} \
+                                  CLANG_TRIPLE=IPLE=arm-linux-gnu \
+                                  CROSS_COMPILE=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin/arm-linux-androidkernel- \
+          cd kernel-source
+          make ${args} ${{ env.KERNEL_CONFIG }}
+          make -j$(($(getconf _NPROCESSORS_ONLN) * 2)) ${args}
+
+      - name: Package kernel
+        run: |
+          git clone --depth=1 ${{ env.ANYKERNEL_SOURCE }} -b ${{ env.ANYKERNEL_SOURCE_BRANCH }} AnyKernel3 && rm -rf AnyKernel3/.git AnyKernel3/.github AnyKernel3/LICENSE AnyKernel3/README.md
+          if [[ -f out/arch/arm/boot/Image.gz ]]; then
+            cp out/arch/arm/boot/Image.gz AnyKernel3/Image.gz
+          elif [[ -f out/arch/arm/boot/zImage ]]; then
+            cp out/arch/arm/boot/Image AnyKernel3/zImage
+          fi
+          if [ -f out/arch/arm/boot/dtbo.img ]; then
+            cp out/arch/arm/boot/dtbo.img AnyKernel3/dtbo.img
+          fi
+
+      - name: Upload kernel to artifact
+        uses: actions/upload-artifact@v4
         with:
-          source_repo: "rdbckp/kernel_a02"
-          source_path: "arch/arm/configs/a02_defconfig"
-          destination_path: "$HOME"
-          commit_message: "Custom commit message"
-          create_pr: false
-          pr_title: "Custom PR title"
-          source_repo_token: ${{ secrets.SOURCE_REPO_PAT }}
-          destination_repo_token: ${{ secrets.DEST_REPO_PAT }}
+          name: output_kernel
+          path: AnyKernel3/*
