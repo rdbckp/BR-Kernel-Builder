@@ -3,7 +3,7 @@
 set -e -x
 
 # Kernel Source
-KERNEL_SOURCE="https://github.com/rdbckp/kernel_Q"
+KERNEL_SOURCE="https://github.com/atipls/samsung-a02-downstream-kernel"
 KERNEL_BRANCH="main"
 KERNEL_DEFCONFIG="a02_defconfig"
 
