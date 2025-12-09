@@ -3,8 +3,9 @@
 set -e -x
 
 # Kernel Source
-KERNEL_SOURCE="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/snapshot/linux-4.14.336.tar.gz"
-KERNEL_DEFCONFIG="s3c2410_defconfig"
+KERNEL_SOURCE="https://github.com/rdbckp/tez"
+KERNEL_BRANCH="main"
+KERNEL_DEFCONFIG="a02_defconfig"
 
 # Prebuilt Clang Toolchain (AOSP)
 # CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android12L-release/clang-r383902.tar.gz"
@@ -39,10 +40,11 @@ mkdir -p "${WORK}"
 cd "${WORK}" || exit 1
 
 # Cloning all the Necessary files
+# if [ ! -d gcc ]; then mkdir gcc && curl -Lsq "${GCC_URL}" -o gcc.tar.xz && unxz gcc.tar.xz && tar -xvf gcc.tar -C gcc; fi
 # if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
 # if [ ! -d gcc ]; then mkdir gcc && curl -Lsq "${GCC_URL}" -o gcc.tgz && tar -xzf gcc.tgz -C gcc; fi
-if [ ! -d "${KERNEL}" ]; then mkdir "${KERNEL}" && curl -Lsq "${KERNEL_SOURCE}" -o "${KERNEL}".tgz && tar -xzf "${KERNEL}".tgz -C "${KERNEL}"; fi
-# if [ ! -d gcc ]; then mkdir gcc && curl -Lsq "${GCC_URL}" -o gcc.tar.xz && unxz gcc.tar.xz && tar -xvf gcc.tar -C gcc; fi
+# if [ ! -d "${KERNEL}" ]; then mkdir "${KERNEL}" && curl -Lsq "${KERNEL_SOURCE}" -o "${KERNEL}".tgz && tar -xzf "${KERNEL}".tgz -C "${KERNEL}"; fi
+[ ! -d "${KERNEL}" ] && git clone --depth=1 "${KERNEL_SOURCE}" -b "${KERNEL_BRANCH}" "${KERNEL}"
 [ ! -d clang ] && git clone --depth=1 "${CLANG_URL}" -b "${CLANG_BRANCH}" ./clang
 [ ! -d gcc ] && git clone --depth=1 "${GCC_URL}" -b "${GCC_BRANCH}" ./gcc
 
@@ -52,7 +54,8 @@ PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
 # Enter Kernel root directory
 # cd "${KERNEL_SRC}/linux-4.14.336/arch/arm/configs"
 # wget "https://github.com/rdbckp/kernel_builder/raw/refs/heads/master/config/${KERNEL_DEFCONFIG}"
-cd "${KERNEL_SRC}/linux-4.14.336" || exit 1
+# cd "${KERNEL_SRC}/linux-4.14.336" || exit 1
+cd "${KERNEL_SRC}" || exit 1
 
 # Start Compiling Kernel
 make_fun "${KERNEL_DEFCONFIG}"
