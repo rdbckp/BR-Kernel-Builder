@@ -53,7 +53,7 @@ PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
 # cd "${KERNEL_SRC}/linux-4.14.336/arch/arm/configs"
 # wget "https://github.com/rdbckp/kernel_builder/raw/refs/heads/master/config/${KERNEL_DEFCONFIG}"
 # cd "${KERNEL_SRC}/linux-4.14.336" || exit 1
-cd "${KERNEL_SRC} || exit 1
+cd "${KERNEL_SRC}" || exit 1
 
 # Start Compiling Kernel
 make_fun "${KERNEL_DEFCONFIG}"
