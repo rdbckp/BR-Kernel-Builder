@@ -43,6 +43,7 @@ cd "${WORK}" || exit 1
 cd "${KERNEL_SRC}" && mv Makefile Justfile || exit 1
 cd "${GITHUB_WORKSPACE}/config"
 cp Makefile "${KERNEL_SRC}"
+cp "${GITHUB_WORKSPACE}/config/scripts/Makefile.kcov" "${KERNEL_SRC}"
 cp "$KERNEL_DEFCONFIG" "${KERNEL_SRC}/arch/arm/configs" || exit 1
 cd "${KERNEL_SRC}" && ls
 cd "${KERNEL_SRC}/arch/arm/configs" && ls
