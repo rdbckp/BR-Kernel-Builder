@@ -19,12 +19,6 @@ GCC_URL="https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-li
 GCC_BRANCH="lineage-17.0"
 # GCC_BRANCH="cm-14.0"
 
-# Setup make Command
-make_fun() {
-  make O=out ARCH=arm \
-    CROSS_COMPILE=arm-linux-androidkernel- "$@"
-}
-
 # Work Path
 WORK="${HOME}/work"
 
