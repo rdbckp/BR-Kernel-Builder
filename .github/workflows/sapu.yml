@@ -10,14 +10,10 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: iamazeem/delete-workflow-runs-action@v1
+      with:
+        include-disabled-workflows: true
 
-    - name: Wayahe
-      run: |
-        cd ${GITHUB_WORKSPACE}
-        rm -rf *
-        
     - name: Configure Git
       run: |
         git config user.name "github-actions[bot]"
