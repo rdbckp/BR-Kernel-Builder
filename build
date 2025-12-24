@@ -5,7 +5,7 @@ set -e -x
 # Kernel Source
 KERNEL_SOURCE="https://github.com/Firxp011/android_kernel_samsung_a02"
 KERNEL_BRANCH="A022FXXS3BWA1"
-KERNEL_DEFCONFIG="a02_defconfig"
+KERNEL_DEFCONFIG="a02_00_defconfig"
 
 # Prebuilt Clang Toolchain (AOSP)
 # CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android10-release/clang-r353983c.tar.gz"
@@ -66,4 +66,4 @@ cd "${KERNEL_SRC}" || exit 1
 
 # Start Compiling Kernel
 make_fun "${KERNEL_DEFCONFIG}"
-make_fun -j"$(nproc --all)" 2>&1 | tee build.log 
+make_fun -j"$(nproc --all)" dtbs modules 2>&1 | tee build.log 
