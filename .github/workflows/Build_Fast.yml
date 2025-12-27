@@ -18,7 +18,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: Preparation
+    - name: Building Kernel
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
@@ -27,18 +27,6 @@ jobs:
         export KBUILD_BUILD_HOST="${{ github.event.inputs.DEVICE_NAME }}"
         chmod +x build
         ./build
-        
-    - name: Start Building Kernel
-      run: |
-        cd /home/runner/work
-        export PATH="${PWD}/clang/bin:${PWD}/gcc/bin:/bin"
-        export ARCH=arm
-        export CROSS_COMPILE=arm-linux-gnueabihf-
-        ls -l /usr/bin/as
-        cd /home/runner/work/myKernel
-        mkdir -p out
-        make O=out HOSTCC=clang a02_defconfig
-        make O=out HOSTCC=clang CROSS_COMPILE=arm-linux-gnueabihf- CC="clang -target arm-linux-gnueabi" -j8
         
     - name: Set Properties
       id: props
