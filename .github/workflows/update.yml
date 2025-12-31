@@ -1,0 +1,37 @@
+name: Sedot clang
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Environment
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade -y
+        sudo apt-get install -y build-essential bc gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf make bison
+        mkdir tempe
+        mv ba.sh tempe/.
+        
+    - name: Configure Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "actions@github.com"
+        git lfs install
+        git lfs track "*.1git clang-11 *.so *.11git"
+        git add .gitattributes
+        
+    - name: Add and Commit file
+      run: |
+        git add *
+        git commit -m "clang"
+        git push
