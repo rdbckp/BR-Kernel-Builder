@@ -17,7 +17,12 @@ jobs:
     - name: Working for clang
       run: |
         cd ${GITHUB_WORKSPACE}
-        rm -rf clang
+        git clone https://github.com/a02-trial/toolchain -b clang11
+        mkdir -p tempe
+        cd toolchain && mv * ${GITHUB_WORKSPACE}/tempe/.
+        cd ..
+        rm -rf toolchain
+        mv tempe clang
         
     - name: Configure Git
       run: |
@@ -26,6 +31,6 @@ jobs:
         
     - name: Add and Commit file
       run: |
-        git rm clang
-        git commit -m "initial tree"
+        git add clang
+        git commit -m "clang"
         git push
