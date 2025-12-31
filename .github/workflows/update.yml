@@ -14,14 +14,24 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Environment
+    - name: Cleanup
+      uses: rokibhasansagar/slimhub_actions@main
+
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 32
+
+    - name: Prepare the environment
       run: |
         sudo apt-get update
-        sudo apt-get upgrade -y
-        sudo apt-get install -y build-essential bc gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf make bison
+        sudo apt-get install -y build-essential bc gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi libssl-dev libfl-dev
+        sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache
+        sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar
         ls
         mkdir tempe
         mv ba.sh tempe/.
+        rm ba.sh
         
     - name: Configure Git
       run: |
