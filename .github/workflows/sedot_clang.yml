@@ -16,14 +16,8 @@ jobs:
 
     - name: Working for clang
       run: |
-        rm clang
         cd ${GITHUB_WORKSPACE}
-        git clone https://github.com/a02-trial/toolchain -b clang11
-        mkdir -p tempe
-        cd toolchain && mv * ${GITHUB_WORKSPACE}/tempe/.
-        cd ..
-        rm -rf toolchain
-        mv tempe clang
+        rm clang
         
     - name: Configure Git
       run: |
