@@ -8,15 +8,12 @@ KERNEL_BRANCH="main"
 
 KERNEL_DEFCONFIG="a02_defconfig"
 
-# Work Path
+# Setup Folder
 WORK="${HOME}/work"
-
-# Kernel Folder Name
 KERNEL="myKernel"
-
-# Kernel Source Path
 KERNEL_SRC="${WORK}/${KERNEL}"
-
-# Prepare Directory
 mkdir -p "${WORK}"
 cd "${WORK}" || exit 1
+
+# Cloning kernel
+[ ! -d "${KERNEL}" ] && git clone --depth=1 "${KERNEL_SOURCE}" -b "${KERNEL_BRANCH}" "${KERNEL}"
