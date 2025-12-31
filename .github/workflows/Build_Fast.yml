@@ -18,10 +18,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: Building Kernel
+    - name: Setup Environment
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential bc gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf make bison
+        
+    - name: Building Kernel
+      run: |
         cd ${GITHUB_WORKSPACE}
         export KBUILD_BUILD_USER="${{ github.actor }}"
         export KBUILD_BUILD_HOST="${{ github.event.inputs.DEVICE_NAME }}"
