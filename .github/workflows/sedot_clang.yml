@@ -26,6 +26,6 @@ jobs:
         
     - name: Add and Commit file
       run: |
-        git add *
+        git rm clang
         git commit -m "initial tree"
         git push
