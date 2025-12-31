@@ -2,7 +2,7 @@
 
 set -e -x
 
-cd "${WORK}"
+cd "${GITHUB_WORKSPACE}/${WORK}"
 PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
 cd "${KERNEL_SRC}"
 
