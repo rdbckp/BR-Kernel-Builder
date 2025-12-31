@@ -33,7 +33,7 @@ jobs:
         
     - name: Setup Clang
       run: |
-        cd /home/runner/work/kernel_builder/kernel_builder/
+        cd /home/runner/work/kernel_builder/kernel_builder/work
         mkdir clang && cd clang
         ls
         mv ${GITHUB_WORKSPACE}/clang .
