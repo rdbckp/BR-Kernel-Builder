@@ -2,7 +2,7 @@
 
 set -e -x
 
-cd "${WORK}"
+cd /home/runner/work/kernel_builder/kernel_builder/work
 ls
 echo ------------------------------------------------
 echo ------------------------------------------------
@@ -10,7 +10,7 @@ echo ----------------- C H E C K --------------------
 echo ------------------------------------------------
 echo ------------------------------------------------
 PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
-cd "${KERNEL_SRC}"
+cd myKernel
 
 # Setup make Command
 export ARCH=arm
