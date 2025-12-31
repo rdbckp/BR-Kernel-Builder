@@ -33,9 +33,10 @@ jobs:
         
     - name: Setup Clang
       run: |
-        cd ${GITHUB_WORKSPACE}
+        cd /home/runner/work/kernel_builder/kernel_builder/
         ls
-        mv clang /home/runner/work/.
+        mv ${GITHUB_WORKSPACE}/clang .
+        ls
         
     - name: Setup Gcc
       run: |
