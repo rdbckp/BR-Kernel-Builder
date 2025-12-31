@@ -22,7 +22,7 @@ CLANG_URL="https://github.com/kdrag0n/proton-clang"
 CLANG_BRANCH="master"
 
 # Prebuilt GCC Utilities (AOSP)
-# GCC_URL="https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/heads/android11-release.tar.gz"
+GCC_URL="https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/+archive/refs/heads/android11-release.tar.gz"
 # GCC_URL="https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git"
 # GCC_BRANCH="lineage-19.1"
 
@@ -58,12 +58,12 @@ cd "${WORK}" || exit 1
 [ ! -d clang ] && git clone --depth=1 "${CLANG_URL}" -b "${CLANG_BRANCH}" ./clang
 
 # Cloning GCC
-# if [ ! -d gcc ]; then mkdir gcc && curl -Lsq "${GCC_URL}" -o gcc.tgz && tar -xzf gcc.tgz -C gcc; fi
+if [ ! -d gcc ]; then mkdir gcc && curl -Lsq "${GCC_URL}" -o gcc.tgz && tar -xzvf gcc.tgz -C gcc; fi
 # [ ! -d gcc ] && git clone --depth=1 "${GCC_URL}" -b "${GCC_BRANCH}" ./gcc
 
 # Setting Toolchain Path
-PATH="${WORK}/clang/bin:${PATH}"
-# PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
+# PATH="${WORK}/clang/bin:${PATH}"
+PATH="${WORK}/clang/bin:${WORK}/gcc/bin:/bin"
 cd "${KERNEL_SRC}" || exit 1
 
 # Start Compiling Kernel
