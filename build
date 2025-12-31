@@ -17,7 +17,7 @@ cd /home/runner/work/kernel_builder/kernel_builder/work/myKernel
 export ARCH=arm
 export CC=clang
 export HOSTCC=clang
-export CROSS_COMPILE=${PATH}/arm-linux-androidkernel-
+export CROSS_COMPILE=arm-linux-androidkernel-
 export CLANG_TRIPLE=arm-linux-gnueabi-
 export KCFLAGS=-w
 export CONFIG_SECTION_MISMATCH_WARN_ONLY=y
