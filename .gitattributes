@@ -1,0 +1,1 @@
+*.1git[[:space:]]clang-11[[:space:]]*.so[[:space:]]*.11git filter=lfs diff=lfs merge=lfs -text
