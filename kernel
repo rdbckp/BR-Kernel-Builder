@@ -6,8 +6,6 @@ set -e -x
 KERNEL_SOURCE="https://github.com/rdbckp/linux"
 KERNEL_BRANCH="main"
 
-KERNEL_DEFCONFIG="a02_defconfig"
-
 # Setup Folder
 WORK="/home/runner/work/kernel_builder/kernel_builder/work"
 KERNEL="myKernel"
