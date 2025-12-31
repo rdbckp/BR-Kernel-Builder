@@ -26,6 +26,12 @@ export xxx="ARCH=arm CC=clang HOSTCC=clang CROSS_COMPILE=arm-linux-androideabi- 
 
 # Start Compiling Kernel
 cd /home/runner/work/kernel_builder/kernel_builder/work/myKernel
+ls
+echo ------------------------------------------------
+echo ------------------------------------------------
+echo ----------------- C H E C K --------------------
+echo ------------------------------------------------
+echo ------------------------------------------------
 mkdir -p out
 make $xxx O=out "${KERNEL_DEFCONFIG}"
 make $xxx O=out -j"$(nproc --all)" 2>&1 | tee build.log 
