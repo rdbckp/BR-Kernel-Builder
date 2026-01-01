@@ -1,4 +1,4 @@
-name: Update Env
+name: Sedot
 
 on:
   workflow_dispatch:
