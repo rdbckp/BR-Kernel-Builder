@@ -3,8 +3,8 @@
 set -e -x
 
 # Kernel Source
-KERNEL_SOURCE="https://github.com/rdbckp/kernel"
-KERNEL_BRANCH="main"
+KERNEL_SOURCE="https://github.com/a02-trial/toolchain"
+KERNEL_BRANCH="kernel"
 
 # Setup Folder
 WORK="/home/runner/work/kernel_builder/kernel_builder/work"
