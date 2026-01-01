@@ -2,7 +2,7 @@
 
 set -e -x
 
-cd /home/runner/work/kernel_builder/kernel_builder/work
+cd /home/runner/work/kernel_builder/kernel_builder/work/myKernel/toolchain
 ls
 echo ------------------------------------------------
 echo ------------------------------------------------
